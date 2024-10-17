@@ -23,5 +23,5 @@ npm install
 ### 4.	Start the development server by running the following command:
 run: npm run dev
 
-###5.	Enjoy! Now you can search for word meanings and learn English with jokes in the app.
+### 5.	Enjoy! Now you can search for word meanings and learn English with jokes in the app.
 This version has a clearer structure and more specific instructions for setting up and running the project.
