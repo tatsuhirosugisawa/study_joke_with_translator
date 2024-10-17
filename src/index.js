@@ -10,17 +10,23 @@ jokeBtn.addEventListener('click', generateJoke)
 const translateBtn = document.getElementById('wordBtn')
 translateBtn.addEventListener('click', async () => {
     const getWord = document.getElementById('word').value;  // Use 'value' to get the input
-
+    const wordDefinition = document.getElementById("word-definition");
+    const wordMeanings = document.getElementById("word-meanings");    
+    
+    if (getWord) {
+        wordDefinition.style.display = 'none';  // Hides the element
+        wordMeanings.style.display = 'none';    // Hides the element
+    }
     
     const data = await translate(getWord);
 
-    
-    if (data) {
-        console.log(`Function return ${JSON.stringify(data)}`);
-    }
 
-    const wordDefinition = document.getElementById("word-definition");
-    const wordMeanings = document.getElementById("word-meanings");
+    if (data) {
+        wordDefinition.style.display = 'block';
+        wordMeanings.style.display = 'block';
+        wordDefinition.innerHTML = '';
+        wordMeanings.innerHTML = '';
+    }
     
     // Create and append the word definition
     let newElement = document.createElement('div');
