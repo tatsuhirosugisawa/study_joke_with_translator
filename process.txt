@@ -1,0 +1,180 @@
+###  npm module (javascript, sass, babel, webpack, axios)
+ebpack@1.0.0 /Users/tatsuhiro/Desktop/webpack
+├── @babel/core@7.25.8
+├── @babel/preset-env@7.25.8
+├── axios@1.7.7
+├── babel-loader@9.2.1
+├── css-loader@7.1.2
+├── html-webpack-plugin@5.6.0
+├── sass-loader@16.0.2
+├── sass@1.80.1
+├── style-loader@4.0.0
+├── webpack-cli@5.1.4
+├── webpack-dev-server@5.1.0
+└── webpack@5.95.0
+
+# map, hot reload , cashe, entry, output 
+# devserver , plugins 
+# plugin analyser 
+
+
+
+
+input: npm init -y 
+output: package.json 
+
+--------
+
+input: npm i -D webpack webpack-cli
+output: package-lock.json, node_modules 
+
+---------
+
+package.json
+  "scripts": {
+    "build": "webpack --mode production"
+  },
+
+input: npm run build 
+
+
+--------------
+
+make webpacl.config.js 
+mode: 'development' => delete  '--mode production' from package.json file 
+
+-----------------
+
+webpack.config.js 
+const path = require('path')  // import path module 
+
+module.exports ={
+    mode: 'development',   // use in development stage,  another example: production, none 
+    entry:{
+        bundle: path.resolve(__dirname, 'src/index.js')   // __dirname => get absolute path where webpack.config.js located in  
+    }, // can add multipme entry point by bundle: filename  
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js'
+    }, 
+}
+
+----------------
+sass 
+
+npm i -D sass style-loader css-loader sass-loader 
+-D: directory 
+
+webpack.config.js 
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            }
+        ]
+    } 
+
+------------------
+npm i -D html-webpack-plugin
+automatically generate dist/ bundle.js index.html
+
+webpack.confing.js 
+    plugins:[
+        new HtmlWebpackPlugin({
+            title: 'Webpack App',
+            filename: 'index.html'
+        })
+    ] 
+
+# everytime run "npm run build" gonna reset to initial html content 
+
+template: 'src/template.html', 
+make src/template.html 
+
+
+---------
+cashing 
+
+webpack.config.js 
+filename: '[name][contenthash].js'
+
+--------
+dev server
+
+package.json 
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack server"
+  },
+
+
+    devServer: {
+        static: {
+            directory: path.resolve(__dirname, 'dist')
+        },
+        port: 3000,   // designate port 
+        open: true,   // automatically open browser 
+        hot: true,    // hot reload 
+        compress: true,  // compress 
+        historyApiFallback: true, // suport SPA 
+    }, 
+
+
+----------
+useful option 
+
+clean 
+
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name][contenthash].js', 
+        clean: true, // keep file only one 
+    },
+
+map 
+    devtool: 'source-map', 
+
+-----
+babel 
+npm i -D babel-loader @babel/core @babel/preset-env
+
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            },
+
+
+img 
+    {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i, 
+        type: 'asset/resource'
+    },
+
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name][contenthash].js', 
+        clean: true, // keep file only one 
+        assetModuleFilename: '[name][ext]'
+    },
+
+
+--------
+http request by axios 
+
+npm -i -D axsios 
+
+
+------
+
+npm i -D webpack-bundle-analyzer
